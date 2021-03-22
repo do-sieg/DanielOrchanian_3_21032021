@@ -12,6 +12,18 @@ $purple-gradient: linear-gradient(#FF79DA, $c-purple);
 $shadow-light: 2px 2px 12px 4px rgba(206, 206, 206, 0.65);
 $shadow-heavy: 2px 2px 12px 4px rgb(206, 206, 206);
 
+@mixin purple-button {
+    height: 50px;
+    padding: 0 22px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    background-color: $c-purple;
+    background-image: $purple-gradient;
+    color: white;
+    box-shadow: $shadow-light;
+}
+
 * {
     box-sizing: border-box;
     outline: none;
@@ -36,6 +48,61 @@ a {
 
 
 
+.loader {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fade-out 1s ease-in 3s;
+    animation-fill-mode: both;
+    .loading-spinner {
+        width: 192px;
+        height: 192px;
+        border-radius: 50%;
+        border: 4px solid $c-lightgrey;
+        border-top-color: $c-purple;
+        animation: spin 2s linear;
+        animation-iteration-count: infinite;
+    }
+    .loading-logo {
+        position: absolute;
+        margin: auto;
+        font-family: $title-font;
+        font-size: x-large;
+        color: $c-purple;
+        animation: scale 2s linear;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes fade-out {
+    0% {opacity: 1;}
+    99% {z-index: 10;}
+    100% {opacity: 0; z-index: -10;}
+}
+
+@keyframes spin {
+    0% {transform: rotate(0);}
+    100% {transform: rotate(360deg);}
+}
+
+@keyframes scale {
+    0% {transform: scaleY(1);}
+    25% {transform: scaleY(1.1)}
+    50% {transform: scaleY(1);}
+    75% {transform: scaleX(1.05);}
+    100% {transform: scaleX(1);}
+}
+
+
+
+
 header {
     position: fixed;
     top: 0;
@@ -50,8 +117,17 @@ header {
 
     background-color: white;
     font-size: 28px;
-    box-shadow: $shadow-heavy;
     z-index: 2;
+    &.header-shadow {
+        box-shadow: $shadow-heavy;
+    }
+    a {
+        position: absolute;
+        // top: 50%;
+        left: 23px;
+        font-size: 16px;
+        color: $c-black;
+    }
 }
 
 
@@ -97,21 +173,12 @@ main {
             color: $c-black;
         }
         button {
-            height: 50px;
-            padding: 0 22px;
-            border-radius: 25px;
-            border: none;
-            font-weight: bold;
-            background-color: $c-purple;
-            background-image: $purple-gradient;
-            color: white;
-            box-shadow: $shadow-light;
+            @include purple-button();
         }
     }
 }
 
 #how-to-use {
-
     padding: 50px 20px 70px;
     background-color: white;
 
@@ -202,8 +269,6 @@ main {
                 position: relative;
                 cursor: pointer;
                 i {
-                    // width: 22px;
-                    // height: 22px;
                     margin-top: 3px;
                     font-size: 22px;
                     transition: opacity 0.2s ease-in-out;
@@ -246,6 +311,148 @@ main {
                 border-radius: 2px;
             }
         }
+    }
+}
+
+
+.menu-page {
+    img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        object-position: center;
+    }
+    .menu {
+        position: relative;
+        top: -40px;
+        padding: 35px 20px;
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        background-color: $c-lightgrey;
+        .menu-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            h1 {
+                margin: 0;
+                font-size: 26px;
+            }
+            i {
+                font-size: 24px;
+                margin-right: 20px;
+                color: $c-grey;
+            }
+        }
+        .menu-body {
+            h2 {
+                width: 40px;
+                margin-top: 45px;
+                padding-bottom: 8px;
+                border-bottom: 3px $c-light-mint solid;
+                text-transform: uppercase;
+                font-family: $text-font;
+                font-size: medium;
+            }
+            .meal-list {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .meal-card {
+                background-color: white;
+                box-shadow: $shadow-light;
+                margin-top: 15px;
+                border-radius: 15px;
+                display: flex;
+                cursor: pointer;
+                opacity: 0;
+                overflow: hidden;
+                animation: fade-in-meal-card 1s ease-in-out 1s;
+                animation-fill-mode: both;
+                &:nth-child(1) { animation-delay: 1s }
+                &:nth-child(2) { animation-delay: 1.3s }
+                &:nth-child(3) { animation-delay: 1.6s }
+                &:nth-child(4) { animation-delay: 1.9s }
+                &:nth-child(5) { animation-delay: 2.1s }
+                &:nth-child(6) { animation-delay: 2.4s }
+                .meal-info {
+                    // flex: 1;
+                    // width: calc(100% - 130px);
+                    width: calc(100% - 75px);
+                    padding: 15px 15px 15px 10px;
+                    overflow: hidden;
+                    h3 {
+                        margin-bottom: 12px;
+                        font-family: $text-font;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                    span {
+                        display: block;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                }
+                .price {
+                    min-width: 75px;
+                    padding-bottom: 16px;
+                    font-weight: bold;
+                    color: $c-black;
+                    display: flex;
+                    align-items: flex-end;
+                    justify-content: center;
+                }
+                .select-zone {
+                    // min-width: 0;
+                    // width: 0;
+                    min-width: 60px;
+                    margin-right: -60px;
+                    background-color: $c-light-mint;
+                    border-top-right-radius: inherit;
+                    border-bottom-right-radius: inherit;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: margin-right 0.5s ease-in-out;
+                    i {
+                        font-size: 20px;
+                        color: white;
+                        transform: rotate(0);
+                        transition: transform 0.5s ease-in-out 0.1s;
+                    }
+                }
+                &:hover {
+                    .select-zone {
+                        margin-right: 0;
+                        i {
+                            transform: rotate(360deg);
+                        }
+                    }
+                }
+            }
+        }
+        .menu-foot {
+            display: flex;
+            justify-content: center;
+            button {
+                margin-top: 50px;
+                @include purple-button();
+            }
+        }
+    }
+}
+
+@keyframes fade-in-meal-card {
+    0% {
+        opacity: 0;
+        margin-top: 15px;
+    }
+    100% {
+        opacity: 1;
+        margin-top: 0;
     }
 }
 
