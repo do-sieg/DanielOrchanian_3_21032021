@@ -217,6 +217,18 @@ main {
   font-weight: bold;
 }
 
+@media (min-width: 480px) {
+  .home-page h2 {
+    text-align: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-page h2 {
+    text-align: left;
+  }
+}
+
 #location .location-marker {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -295,6 +307,21 @@ main {
   background-color: white;
 }
 
+@media (min-width: 480px) {
+  #how-to-use {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  #how-to-use {
+    width: unset;
+  }
+}
+
 #how-to-use h2 {
   margin-bottom: 35px;
 }
@@ -326,6 +353,7 @@ main {
 #how-to-use ol li {
   position: relative;
   height: 72px;
+  margin-left: 12px;
   border-radius: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -340,8 +368,15 @@ main {
   font-weight: 500;
 }
 
+@media (min-width: 480px) {
+  #how-to-use ol li {
+    width: 350px;
+  }
+}
+
 @media (min-width: 1024px) {
   #how-to-use ol li {
+    width: unset;
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;

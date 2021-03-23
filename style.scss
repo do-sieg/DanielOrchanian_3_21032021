@@ -203,11 +203,20 @@ main {
     margin-top: $header-height;
 }
 
-// Titles on the home page use the same font as the text
 .home-page {
+    // Titles on the home page use the same font as the text
     h1, h2, h3 {
         font-family: $text-font;
         font-weight: bold;
+    }
+
+    h2 {
+        @media (min-width: 480px) {
+            text-align: center;
+        }
+        @media (min-width: 1024px) {
+            text-align: left;
+        }
     }
 }
 
@@ -251,6 +260,13 @@ main {
 #how-to-use {
     padding: 50px 20px 70px;
     background-color: white;
+    @media (min-width: 480px) {
+        width: fit-content;
+        margin: 0 auto;
+    }
+    @media (min-width: 1024px) {
+        width: unset;
+    }
 
     h2 {
         margin-bottom: 35px;
@@ -271,6 +287,7 @@ main {
         li {
             position: relative;
             height: 72px;
+            margin-left: 12px;
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -278,7 +295,12 @@ main {
             background-color: $c-lightgrey;
             box-shadow: $shadow-heavy;
             font-weight: 500;
+            
+            @media (min-width: 480px) {
+                width: 350px;
+            }
             @media (min-width: 1024px) {
+                width: unset;
                 flex: 1;
             }
             &::before {
