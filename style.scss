@@ -1,3 +1,4 @@
+/* VARIABLES ---------------------------------------- */
 $header-height: 64px;
 $footer-height: 200px;
 $title-font: 'Shrikhand';
@@ -6,23 +7,81 @@ $c-black: #353535;
 $c-lightgrey: #f6f6f6;
 $c-grey: #7E7E7E;
 $c-purple: #9356DC;
+$c-pink: #FF79DA;
 $c-light-mint: #99E2D0;
 $c-dark-mint: #008766;
-$purple-gradient: linear-gradient(#FF79DA, $c-purple);
+$purple-gradient: linear-gradient($c-pink, $c-purple);
+$purple-gradient-light: linear-gradient(lighten($c-pink, 5%), lighten($c-purple, 5%));
 $shadow-light: 2px 2px 12px 4px rgba(206, 206, 206, 0.65);
-$shadow-heavy: 2px 2px 12px 4px rgb(206, 206, 206);
+$shadow-heavy: 2px 2px 12px 4px rgb(176, 176, 176);
 
+
+/* MIXINS ---------------------------------------- */
+
+// Mixin - Container
+@mixin container {
+    @media (min-width: 1024px) {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+// Mixin - Purple Button
 @mixin purple-button {
     height: 50px;
     padding: 0 22px;
     border-radius: 25px;
     border: none;
     font-weight: bold;
+    font-size: smaller;
     background-color: $c-purple;
     background-image: $purple-gradient;
     color: white;
     box-shadow: $shadow-light;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        background-color: lighten($c-purple, 5%);
+        background-image: $purple-gradient-light;
+        box-shadow: $shadow-heavy;
+    }
 }
+
+// Mixin - Like Button
+@mixin like-btn($size) {
+    position: relative;
+    width: $size;
+    height: $size;
+    background-color: $c-purple;
+    background-image: $purple-gradient;
+    cursor: pointer;
+    i {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        padding: 1px;
+        font-size: $size;
+        transition: opacity 0.2s ease-in-out;
+        color: $c-grey;
+        background-color: $c-lightgrey;
+    }
+    &:hover {
+        i {
+            opacity: 0;
+        }
+        .on-hover {
+            opacity: 1;
+        }
+    }
+    .on-hover {
+        opacity: 1;
+        background-color: $c-lightgrey;
+        mix-blend-mode: lighten;
+    }
+}
+
+
+/* BASE ------------------------------------------ */
 
 * {
     box-sizing: border-box;
@@ -35,7 +94,7 @@ body {
 }
 
 
-h1, h2, h3, .logo-title {
+h1, h2, h3 {
     margin-top: 0;
     font-family: $title-font;
     font-weight: normal;
@@ -47,7 +106,14 @@ a {
 }
 
 
+/* COMPONENTS ------------------------------------ */
 
+// Inner Container (used to limit some elements's width on Desktop)
+.inner-container {
+    @include container();
+}
+
+// Loader
 .loader {
     background-color: white;
     position: fixed;
@@ -81,6 +147,7 @@ a {
     }
 }
 
+// Loader Animations
 @keyframes fade-out {
     0% {opacity: 1;}
     99% {z-index: 10;}
@@ -101,7 +168,7 @@ a {
 }
 
 
-
+/* HEADER ---------------------------------------- */
 
 header {
     position: fixed;
@@ -110,20 +177,18 @@ header {
     width: 100%;
     height: $header-height;
     padding: 23px 0 12px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background-color: white;
     font-size: 28px;
+    background-color: white;
     z-index: 2;
+    // Shadow variant
     &.header-shadow {
         box-shadow: $shadow-heavy;
     }
     a {
         position: absolute;
-        // top: 50%;
         left: 23px;
         font-size: 16px;
         color: $c-black;
@@ -131,11 +196,14 @@ header {
 }
 
 
+/* MAIN ------------------------------------------ */
+
 main {
     min-height: calc(100vh - #{$header-height} - #{$footer-height});
     margin-top: $header-height;
 }
 
+// Titles on the home page use the same font as the text
 .home-page {
     h1, h2, h3 {
         font-family: $text-font;
@@ -143,6 +211,7 @@ main {
     }
 }
 
+// Home - Location
 #location {
     .location-marker {
         display: flex;
@@ -178,6 +247,7 @@ main {
     }
 }
 
+// Home - How to Use
 #how-to-use {
     padding: 50px 20px 70px;
     background-color: white;
@@ -193,6 +263,11 @@ main {
         flex-direction: column;
         gap: 25px;
         counter-set: index;
+        // Organize horizontally on Desktop
+        @media (min-width: 1024px) {
+            flex-direction: row;
+            gap: 35px;
+        }
         li {
             position: relative;
             height: 72px;
@@ -203,6 +278,9 @@ main {
             background-color: $c-lightgrey;
             box-shadow: $shadow-heavy;
             font-weight: 500;
+            @media (min-width: 1024px) {
+                flex: 1;
+            }
             &::before {
                 counter-increment: index 1;
                 content: counter(index);
@@ -230,6 +308,7 @@ main {
     }
 }
 
+// Home - Restaurants
 #restaurants {
     padding: 60px 20px;
     background-color: $c-lightgrey;
@@ -238,6 +317,12 @@ main {
         display: flex;
         flex-direction: column;
         gap: 18px;
+        // Organize on a grid on Desktop
+        @media (min-width: 1024px) {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 48%);
+            gap: 35px 4%;
+        }
     }
 
     .card {
@@ -251,6 +336,10 @@ main {
             object-position: bottom;
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
+            // Center image position on Desktop
+            @media (min-width: 1024px) {
+                object-position: center;
+            }
         }
         .card-bottom {
             padding: 20px 25px 20px 15px;
@@ -264,37 +353,9 @@ main {
                     margin: 0;
                 }
             }
-
-            .favorite {
-                position: relative;
-                cursor: pointer;
-                i {
-                    margin-top: 3px;
-                    font-size: 22px;
-                    transition: opacity 0.2s ease-in-out;
-                    color: $c-grey;
-                }
-                &:hover {
-                    i {
-                        opacity: 0;
-                    }
-                    .on-hover {
-                        opacity: 1;
-                    }
-                }
-                .on-hover {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    opacity: 0;
-                    
-                    -webkit-background-clip: text;
-                    -moz-background-clip: text;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-color: $c-purple;
-                    background-image: $purple-gradient;
-                }
+            .favorite-btn {
+                @include like-btn(22px);
+                margin-top: 3px;
             }
         }
         &.new {
@@ -315,20 +376,27 @@ main {
 }
 
 
+// Menu Page
 .menu-page {
     img {
         width: 100%;
         height: 260px;
         object-fit: cover;
         object-position: center;
+        // Increase image size on Desktop
+        @media (min-width: 1024px) {
+            height: 480px;
+        }
     }
     .menu {
+        @include container();
         position: relative;
         top: -40px;
-        padding: 35px 20px;
+        padding: 35px 15px;
         border-top-left-radius: 40px;
         border-top-right-radius: 40px;
         background-color: $c-lightgrey;
+
         .menu-head {
             display: flex;
             align-items: baseline;
@@ -339,11 +407,20 @@ main {
             }
             i {
                 font-size: 24px;
-                margin-right: 20px;
                 color: $c-grey;
+            }
+            .favorite-btn {
+                @include like-btn(24px);
+                margin-right: 20px;
             }
         }
         .menu-body {
+            // Organize on a grid on Desktop
+            @media (min-width: 1024px) {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, 30%);
+                gap: 5%;
+            }
             h2 {
                 width: 40px;
                 margin-top: 45px;
@@ -353,11 +430,13 @@ main {
                 font-family: $text-font;
                 font-size: medium;
             }
+            // Meal Cards List
             .meal-list {
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
             }
+            // Meal Card
             .meal-card {
                 background-color: white;
                 box-shadow: $shadow-light;
@@ -369,6 +448,7 @@ main {
                 overflow: hidden;
                 animation: fade-in-meal-card 1s ease-in-out 1s;
                 animation-fill-mode: both;
+                // Delay each child's animation to make a progressive fade in effect
                 &:nth-child(1) { animation-delay: 1s }
                 &:nth-child(2) { animation-delay: 1.3s }
                 &:nth-child(3) { animation-delay: 1.6s }
@@ -376,14 +456,13 @@ main {
                 &:nth-child(5) { animation-delay: 2.1s }
                 &:nth-child(6) { animation-delay: 2.4s }
                 .meal-info {
-                    // flex: 1;
-                    // width: calc(100% - 130px);
                     width: calc(100% - 75px);
-                    padding: 15px 15px 15px 10px;
+                    padding: 15px 5px 15px 10px;
                     overflow: hidden;
                     h3 {
-                        margin-bottom: 12px;
+                        margin-bottom: 8px;
                         font-family: $text-font;
+                        font-size: 18px;
                         font-weight: bold;
                         white-space: nowrap;
                         text-overflow: ellipsis;
@@ -394,6 +473,7 @@ main {
                         white-space: nowrap;
                         text-overflow: ellipsis;
                         overflow: hidden;
+                        font-size: 14px;
                     }
                 }
                 .price {
@@ -406,8 +486,6 @@ main {
                     justify-content: center;
                 }
                 .select-zone {
-                    // min-width: 0;
-                    // width: 0;
                     min-width: 60px;
                     margin-right: -60px;
                     background-color: $c-light-mint;
@@ -445,6 +523,7 @@ main {
     }
 }
 
+// Meal Card Animation
 @keyframes fade-in-meal-card {
     0% {
         opacity: 0;
@@ -457,30 +536,27 @@ main {
 }
 
 
+/* FOOTER ---------------------------------------- */
 
 footer {
-    // position: fixed;
-    // bottom: 0;
-    // left: 0;
-    // width: 100%;
     height: $footer-height;
     padding: 25px 25px 40px;
     background-color: $c-black;
     color: white;
 
     h3 {
-        font-size: medium;
+        font-size: 20px;
         font-weight: normal;
     }
 
     a {
         display: block;
-        font-size: 12px;
+        font-size: 16px;
         +a {
             margin-top: 12px;
         }
         i {
-            width: 12px;
+            width: 16px;
             margin-right: 10px;
         }
     }
