@@ -57,10 +57,10 @@ $shadow-heavy: 2px 2px 12px 4px rgb(176, 176, 176);
     cursor: pointer;
     i {
         position: absolute;
-        top: -1px;
-        left: -1px;
+        top: 0;
+        left: 0;
         padding: 1px;
-        font-size: $size;
+        font-size: $size - 2;
         transition: opacity 0.2s ease-in-out;
         color: $c-grey;
         background-color: $c-lightgrey;
@@ -295,6 +295,8 @@ main {
             background-color: $c-lightgrey;
             box-shadow: $shadow-heavy;
             font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
             
             @media (min-width: 480px) {
                 width: 350px;
@@ -322,7 +324,11 @@ main {
                 width: 18px;
                 margin-right: 30px;
                 color: $c-grey;
-                &.fa-store {
+                transition: color 0.3s ease-in-out;
+            }
+            &:hover {
+                background-color: #F5EDFF;
+                i {
                     color: $c-purple;
                 }
             }
@@ -376,7 +382,7 @@ main {
                 }
             }
             .favorite-btn {
-                @include like-btn(22px);
+                @include like-btn(24px);
                 margin-top: 3px;
             }
         }
@@ -432,7 +438,7 @@ main {
                 color: $c-grey;
             }
             .favorite-btn {
-                @include like-btn(24px);
+                @include like-btn(26px);
                 margin-right: 20px;
             }
         }

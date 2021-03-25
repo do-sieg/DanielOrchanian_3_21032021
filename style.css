@@ -366,6 +366,9 @@ main {
   -webkit-box-shadow: 2px 2px 12px 4px #b0b0b0;
           box-shadow: 2px 2px 12px 4px #b0b0b0;
   font-weight: 500;
+  cursor: pointer;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 @media (min-width: 480px) {
@@ -409,9 +412,15 @@ main {
   width: 18px;
   margin-right: 30px;
   color: #7E7E7E;
+  -webkit-transition: color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
-#how-to-use ol li i.fa-store {
+#how-to-use ol li:hover {
+  background-color: #F5EDFF;
+}
+
+#how-to-use ol li:hover i {
   color: #9356DC;
 }
 
@@ -433,10 +442,8 @@ main {
 
 @media (min-width: 1024px) {
   #restaurants .cards-list {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (48%)[auto-fill];
-        grid-template-columns: repeat(auto-fill, 48%);
+    grid-template-columns: repeat(auto-fill, 48%);
     gap: 35px 4%;
   }
 }
@@ -486,8 +493,8 @@ main {
 
 #restaurants .card .card-bottom .favorite-btn {
   position: relative;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   background-color: #9356DC;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#FF79DA), to(#9356DC));
   background-image: linear-gradient(#FF79DA, #9356DC);
@@ -497,8 +504,8 @@ main {
 
 #restaurants .card .card-bottom .favorite-btn i {
   position: absolute;
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   padding: 1px;
   font-size: 22px;
   -webkit-transition: opacity 0.2s ease-in-out;
@@ -589,8 +596,8 @@ main {
 
 .menu-page .menu .menu-head .favorite-btn {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   background-color: #9356DC;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#FF79DA), to(#9356DC));
   background-image: linear-gradient(#FF79DA, #9356DC);
@@ -600,8 +607,8 @@ main {
 
 .menu-page .menu .menu-head .favorite-btn i {
   position: absolute;
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   padding: 1px;
   font-size: 24px;
   -webkit-transition: opacity 0.2s ease-in-out;
@@ -626,10 +633,8 @@ main {
 
 @media (min-width: 1024px) {
   .menu-page .menu .menu-body {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (30%)[auto-fill];
-        grid-template-columns: repeat(auto-fill, 30%);
+    grid-template-columns: repeat(auto-fill, 30%);
     gap: 5%;
   }
 }
