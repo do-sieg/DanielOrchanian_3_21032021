@@ -8,8 +8,3 @@ Créer un site (design seulement) orienté mobile, avec des animations pour dyna
 Voir les détails [ici](oc3-brief-ohmyfood.pdf).
 
 ![screens](oc3-screens.jpg)
-
-
-## Contraintes
-
-
